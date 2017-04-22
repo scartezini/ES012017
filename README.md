@@ -14,6 +14,11 @@ Esse projeto é requisito da matéria de *[Engenharia de Software][ES]* (CIC 116
 
     $ npm test
     
+## Metodologia de desenvolvimento
+
+Esse projeto está sendo desenvolvido usando a metodologia Extreme Programming (*[XP][XP]*). As histórias de usuário criadas usando a metodologia podem ser encontradas *[aqui][USERSTORY]*. As votações a respeito da complexidade dessas histórias estão sendo feitas através da plataforma do Plan IT Poker (e podem ser acessadas *[aqui][PLANITPOKER]*). Por fim, as tarefas criadas a partir dessas histórias possuem referência a qual história elas possuem nas *[Issues][ISSUES]* criadas para elas.
+
+
 ## Diretrizes do projeto
 
 ### Estilo do código
@@ -30,8 +35,12 @@ As tarefas a serem desenvolvidas serão geradas como *[Issues][ISSUES]*, as tare
 As mensagens de commit seguem um padrão especificado *[aqui][GITMSG]*.
 
 [ES]: https://github.com/gvanerven/engsoftware
+[XP]: http://www.extremeprogramming.org/
+[USERSTORY]: https://github.com/scartezini/ES012017/projects/2
+[PLANITPOKER]: http://www.planitpoker.com/board/#/room/218b7d5208b8497282f49938b45d91ca
 [GUIDELINES]: https://github.com/airbnb/javascript
 [ISSUES]: https://github.com/scartezini/ES012017/issues
 [PROJECTS]: https://github.com/scartezini/ES012017/projects
 [WIKI]: https://github.com/scartezini/ES012017/wiki
 [GITMSG]: https://github.com/erlang/otp/wiki/Writing-good-commit-messages
+
