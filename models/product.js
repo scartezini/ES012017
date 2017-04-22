@@ -24,4 +24,4 @@ Product.set('toJSON', {
 })
 
 
-Mongoose.model('Product',Product)
+module.exports = Mongoose.model('Product',Product)

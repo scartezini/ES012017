@@ -21,4 +21,4 @@ Section.set('toJSON', {
 })
 
 
-Mongoose.model('Section',Section)
+module.exports = Mongoose.model('Section',Section)

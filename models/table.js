@@ -3,7 +3,7 @@ const Schema = Mongoose.Schema
 
 
 const Table = new Schema({
-	name: String,
+	name: {type: String, required:true, unique:true},
 	token: String,
 
 	status: String
@@ -23,7 +23,7 @@ Table.set('toJSON', {
 })
 
 
-Mongoose.model('Table',Table)
+module.exports = Mongoose.model('Table',Table)
 
 
 		

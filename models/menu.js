@@ -21,4 +21,4 @@ Menu.set('toJSON', {
 })
 
 
-Mongoose.model('Menu',Menu)
+ module.exports = Mongoose.model('Menu',Menu)
