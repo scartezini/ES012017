@@ -1,8 +1,31 @@
 body {
-  padding: 50px;
-  font: 14px "Lucida Grande", Helvetica, Arial, sans-serif;
+	padding-bottom: 60px;
 }
 
-a {
-  color: #00B7FF;
+body.access {
+	background: #efefef;
+}
+
+#welcome {
+	margin: auto;
+	text-align: center;
+	margin-top: 80px;
+
+	padding: 20px;
+	background: #FFF;
+	border-radius: 6px;
+	box-shadow: 0px 2px 20px rgba(0,0,0,.2);
+}
+
+#welcome .logo {
+	width: 120px;
+}
+
+#call-waiter {
+	position: fixed;
+	width: 200px;
+	border-radius: 20px;
+	left: 50%;
+	margin-left: -100px;
+	bottom: 20px;
 }
