@@ -25,8 +25,7 @@ Esse projeto está sendo desenvolvido usando a metodologia Extreme Programming (
 O código será escrito com o padrão "Camel Case". 
 Como padrão, as variáveis, abstrações e nomes no código serão dadas em inglês e toda a documentaço será feita em português. 
 
-A linguagem de programação utilizada é o JavaScript utilizando diretrizes (*[Guidelines][GUIDELINES]*) disponibilizada
-pelos próprios criadores da linguagem.
+A linguagem de programação utilizada é o JavaScript e o projeto segue diretrizes (*[Guidelines][GUIDELINES]*) para programar nessa linguagem feitas pelos desenvolvedores do airbnb.
 
 ### Documentação no Git
 As tarefas a serem desenvolvidas serão geradas como *[Issues][ISSUES]*, as tarefas macros a serem feitas estão específicadas nos
