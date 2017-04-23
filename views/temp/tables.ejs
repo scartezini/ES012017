@@ -98,6 +98,7 @@
             $scope.error = false;
             $http.post("/api/table", {name: $scope.newTableName}, {headers: {'Content-Type': 'application/json'}})
                 .then(function (response) {
+                    $scope.tables.push(response.data)
                     console.log(response.data)
                 },
                 function(data) {
