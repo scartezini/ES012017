@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" ng-app="tables">
   <head>
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
@@ -17,7 +17,7 @@
       <script src="https://oss.maxcdn.com/respond/1.4.2/respond.min.js"></script>
     <![endif]-->
   </head>
-  <body>
+      <body ng-controller="Table" ng-init="GetAllTables()">
 
     <nav class="navbar navbar-default">
         <div class="container-fluid">
@@ -43,7 +43,7 @@
                 <form class="navbar-form navbar-right">
                     <div class="form-group">
                         <label for="new-table" style="margin-right:10px;">Nova mesa: </label>
-                        <input id="new-table" type="text" class="form-control" placeholder="número da mesa">
+                        <input id="new-table" type="text" ng-model="name" class="form-control" placeholder="número da mesa">
                     </div>
                     <button type="submit" class="btn btn-default">Cadastrar</button>
                 </form>
@@ -55,28 +55,20 @@
 
 
     <div class="container">
-        <table class="table"> 
-            <caption>Mesas cadastradas</caption> 
-            <thead> 
-                <tr> 
-                    <th>Número da mesa</th> 
-                    <th>TOKEN</th> 
+        <table class="table">
+            <caption>Mesas cadastradas</caption>
+            <thead>
+                <tr>
+                    <th>Nome da mesa</th>
+                    <th>TOKEN</th>
                 </tr>
-            </thead> 
-            <tbody> 
-                <tr> 
-                    <th scope="row">1</th> 
-                    <td>Mark</td> 
-                </tr> 
-                <tr> 
-                    <th scope="row">2</th> 
-                    <td>Jacob</td> 
-                </tr> 
-                <tr> 
-                    <th scope="row">3</th> 
-                    <td>Larry</td> 
-                </tr> 
-            </tbody> 
+            </thead>
+            <tbody>
+                <tr ng-repeat="table in tables">
+                    <th scope="row">{{ table.name }}</th>
+                    <td>{{ table.token }}</td>
+                </tr>
+            </tbody>
         </table>
     </div>
 
@@ -85,5 +77,18 @@
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
     <!-- Include all compiled plugins (below), or include individual files as needed -->
     <script src="/js/bootstrap.min.js"></script>
+    <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.6.4/angular.min.js"></script>
+    <script>
+    var app = angular.module("tables", []);
+    app.controller("Table", function($scope, $http) {
+        $scope.GetAllTables = function () {
+            $http.get('/api/table')
+            .then(function (response) {
+                $scope.tables = response.data;
+                console.log(response.data)
+            })
+        }
+    });
+    </script>
   </body>
 </html>
