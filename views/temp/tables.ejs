@@ -43,9 +43,9 @@
                 <form class="navbar-form navbar-right">
                     <div class="form-group">
                         <label for="new-table" style="margin-right:10px;">Nova mesa: </label>
-                        <input id="new-table" type="text" ng-model="name" class="form-control" placeholder="número da mesa">
+                        <input id="new-table" type="text" ng-model="newTableName" class="form-control" placeholder="número da mesa">
                     </div>
-                    <button type="submit" class="btn btn-default">Cadastrar</button>
+                    <button ng-click="CreateTable()" ng-disabled="!newTableName" class="btn btn-default">Cadastrar</button>
                 </form>
 
             </div><!-- /.navbar-collapse -->
@@ -81,12 +81,20 @@
     <script>
     var app = angular.module("tables", []);
     app.controller("Table", function($scope, $http) {
+        $scope.newTableName = '';
+
         $scope.GetAllTables = function () {
             $http.get('/api/table')
-            .then(function (response) {
-                $scope.tables = response.data;
-                console.log(response.data)
-            })
+                .then(function (response) {
+                    $scope.tables = response.data;
+                    console.log(response.data)
+                })
+        }
+        $scope.CreateTable = function () {
+            $http.post("/api/table", {name: $scope.newTableName}, {headers: {'Content-Type': 'application/json'}})
+                .then(function (response) {
+                    console.log(response.data)
+                })
         }
     });
     </script>
