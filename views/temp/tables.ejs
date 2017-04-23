@@ -9,6 +9,7 @@
 
     <!-- Bootstrap -->
     <link href="/css/bootstrap.min.css" rel="stylesheet">
+    <link href="//netdna.bootstrapcdn.com/font-awesome/3.2.1/css/font-awesome.css" rel="stylesheet">
 
     <!-- HTML5 shim and Respond.js for IE8 support of HTML5 elements and media queries -->
     <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
@@ -17,7 +18,7 @@
       <script src="https://oss.maxcdn.com/respond/1.4.2/respond.min.js"></script>
     <![endif]-->
   </head>
-      <body ng-controller="Table" ng-init="GetAllTables()">
+  <body ng-controller="Table" ng-init="GetAllTables()">
 
     <nav class="navbar navbar-default">
         <div class="container-fluid">
@@ -55,6 +56,9 @@
 
 
     <div class="container">
+        <div class="alert alert-danger" ng-if="error">
+          <strong>Ops!</strong> {{ errorMessage }}
+        </div>
         <table class="table">
             <caption>Mesas cadastradas</caption>
             <thead>
@@ -65,7 +69,7 @@
             </thead>
             <tbody>
                 <tr ng-repeat="table in tables">
-                    <th scope="row">{{ table.name }}</th>
+                    <th scope="row"><span class="icon icon-remove-sign" ng-click="RemoveTable($index)"></span> {{ table.name }}</th>
                     <td>{{ table.token }}</td>
                 </tr>
             </tbody>
@@ -82,17 +86,30 @@
     var app = angular.module("tables", []);
     app.controller("Table", function($scope, $http) {
         $scope.newTableName = '';
+        $scope.error = false;
 
         $scope.GetAllTables = function () {
             $http.get('/api/table')
                 .then(function (response) {
                     $scope.tables = response.data;
-                    console.log(response.data)
                 })
         }
         $scope.CreateTable = function () {
+            $scope.error = false;
             $http.post("/api/table", {name: $scope.newTableName}, {headers: {'Content-Type': 'application/json'}})
                 .then(function (response) {
+                    console.log(response.data)
+                },
+                function(data) {
+                    $scope.error = true;
+                    $scope.errorMessage = data.data.errmsg;
+                    console.log(data)
+                })
+        }
+        $scope.RemoveTable = function (index) {
+            $http.delete('/api/table/' + $scope.tables[index].id)
+                .then(function (response) {
+                    $scope.tables.splice(index, 1);
                     console.log(response.data)
                 })
         }
