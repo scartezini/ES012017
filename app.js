@@ -12,16 +12,8 @@ var mongoose = require('mongoose');
 //Routes
 var index = require('./routes/index');
 var menu = require('./routes/menu');
-var users = require('./routes/users');
 var table = require('./routes/table');
 var notification = require('./routes/notification');
-
-////
-var temp = require('./routes/temp');
-////
-
-
-
 
 var app = express();
 
@@ -44,14 +36,10 @@ app.use(cookieParser());
 app.use(express.static(path.join(__dirname, 'public')));
 
 app.use('/', index);
-app.use('/users', users);
 app.use('/api/table',table);
 app.use('/api/menu',menu);
 app.use('/api/notification',notification);
 
-///////
-app.use('/temp', temp);
-///////
 
 // catch 404 and forward to error handler
 app.use(function(req, res, next) {
@@ -61,7 +49,7 @@ app.use(function(req, res, next) {
 });
 
 // error handler
-app.use(function(err, req, res, next) {
+app.use( (err, req, res, next) => {
   // set locals, only providing error in development
   res.locals.message = err.message;
   res.locals.error = req.app.get('env') === 'development' ? err : {};
