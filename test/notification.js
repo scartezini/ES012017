@@ -58,3 +58,24 @@ describe('/POST Notification', () => {
 	})
 })
 
+describe('/DELETE/:id notification',() => {
+
+	beforeEach((done) => {
+		Notification.remove({}, (err) => {
+			done()
+		})
+	})
+	
+	it('it should DELETE a notification by the given id',(done) => {
+		var notification = new Notification({})
+		notification.save((err,book)=>{
+			chai.request(app)
+				.delete('/api/notification/' + notification.id)
+				.end((err,res) => {
+					res.should.have.status(200)
+				
+					done()
+				})
+		})
+	})
+})

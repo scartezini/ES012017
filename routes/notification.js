@@ -29,4 +29,19 @@ router.post('/',(req,res,next) => {
 		}
 	})
 })
+
+//DELETE 
+router.delete('/:id',(req,res,next) => {
+	Notification.remove({_id : req.params.id},(err) =>{
+		if(err){
+			res.status(400)
+			res.json(err)
+		}
+		else
+			res.json({remove:"ok"});
+
+	})
+})
+
+
 module.exports = router;
