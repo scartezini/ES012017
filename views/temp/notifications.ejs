@@ -36,7 +36,7 @@
             <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
 
                 <ul class="nav navbar-nav">
-                    <li><a href="/temp/tables">Mesas</a></li>
+                    <li><a href="/table">Mesas</a></li>
                     <li class="active"><a href="/temp/notifications">Notificações</a></li>
                 </ul>
 
@@ -89,7 +89,7 @@
         $scope.RemoveNotification = function (index) {
             $http.delete('/api/notification/' + $scope.notifications[index].id)
                 .then(function (response) {
-                    $scope.tables.splice(index, 1);
+                    $scope.notifications.splice(index, 1);
                     console.log(response.data)
                 })
         }
