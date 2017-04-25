@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" ng-app="notification" ng-controller="Notification" ng-init="GetAllNotifications()">
   <head>
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
@@ -47,44 +47,26 @@
 
 
     <div class="container">
-        <table class="table"> 
-            <caption>Notificações</caption> 
-            <thead> 
-                <tr> 
+        <table class="table">
+            <caption>Notificações</caption>
+            <thead>
+                <tr>
                     <th>Mesa</th>
                     <th></th>
                     <th></th>
                 </tr>
-            </thead> 
-            <tbody> 
-                <tr> 
-                    <th scope="row">31</th> 
+            </thead>
+            <tbody>
+                <tr ng-repeat="notification in notifications">
+                    <th scope="row">#</th>
                     <td>Chamou o garçom</td>
                     <td>
                         <div class="checkbox">
-                            <label><input type="checkbox"></label>
+                            <label><input type="checkbox" ng-click="RemoveNotification($index)"></label>
                         </div>
                     </td>
-                </tr> 
-                <tr> 
-                    <th scope="row">25</th> 
-                    <td>Chamou o garçom</td>
-                    <td>
-                        <div class="checkbox">
-                            <label><input type="checkbox"></label>
-                        </div>
-                    </td>
-                </tr> 
-                <tr> 
-                    <th scope="row">13</th> 
-                    <td>Chamou o garçom</td>
-                    <td>
-                        <div class="checkbox">
-                            <label><input type="checkbox"></label>
-                        </div>
-                    </td>
-                </tr> 
-            </tbody> 
+                </tr>
+            </tbody>
         </table>
     </div>
 
@@ -93,5 +75,25 @@
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
     <!-- Include all compiled plugins (below), or include individual files as needed -->
     <script src="/js/bootstrap.min.js"></script>
+    <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.6.4/angular.min.js"></script>
+    <script>
+    var app = angular.module("notification", []);
+    app.controller("Notification", function($scope, $http) {
+        $scope.notifications = []
+        $scope.GetAllNotifications = function () {
+            $http.get('/api/notification')
+                .then(function (response) {
+                    $scope.notifications = response.data;
+                })
+        }
+        $scope.RemoveNotification = function (index) {
+            $http.delete('/api/notification/' + $scope.notifications[index].id)
+                .then(function (response) {
+                    $scope.tables.splice(index, 1);
+                    console.log(response.data)
+                })
+        }
+    });
+    </script>
   </body>
 </html>
