@@ -5,7 +5,6 @@ var logger = require('morgan');
 var cookieParser = require('cookie-parser');
 var bodyParser = require('body-parser');
 
-var config = require('./config/dev.json');
 var mongoose = require('mongoose');
 
 
@@ -17,8 +16,7 @@ var notification = require('./routes/notification');
 
 var app = express();
 
-
-mongoose.connect(config.DBHost);
+mongoose.connect(process.env.MONGODB_URI);
 let db = mongoose.connection;
 db.on('error', console.error.bind(console, 'connection error:'));
 
