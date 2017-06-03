@@ -7,12 +7,16 @@ var bodyParser = require('body-parser');
 
 var mongoose = require('mongoose');
 
+var passport = require('passport');
+var LocalStrategy = require('passport-local').Strategy;
+
 
 //Routes
 var index = require('./routes/index');
 var menu = require('./routes/menu');
 var table = require('./routes/table');
 var notification = require('./routes/notification');
+var restaurant = require('./routes/restaurant');
 
 var app = express();
 
@@ -31,12 +35,26 @@ app.use(logger('dev'));
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: false }));
 app.use(cookieParser());
+app.use(require('express-session')({
+    secret: 'keyboard cat',
+    resave: false,
+    saveUninitialized: false
+}));
+app.use(passport.initialize());
+app.use(passport.session());
 app.use(express.static(path.join(__dirname, 'public')));
 
 app.use('/', index);
 app.use('/api/table',table);
 app.use('/api/menu',menu);
 app.use('/api/notification',notification);
+app.use('/restaurant', restaurant);
+
+// passport config
+var Restaurant = require('./models/restaurant');
+passport.use(new LocalStrategy(Restaurant.authenticate()));
+passport.serializeUser(Restaurant.serializeUser());
+passport.deserializeUser(Restaurant.deserializeUser());
 
 
 // catch 404 and forward to error handler
