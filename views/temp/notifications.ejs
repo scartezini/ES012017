@@ -58,8 +58,8 @@
             </thead>
             <tbody>
                 <tr ng-repeat="notification in notifications">
-                    <th scope="row">#</th>
-                    <td>Chamou o garçom</td>
+                    <th scope="row">{{ notification.table }}</th>
+                    <td>{{ notification.message }}</td>
                     <td>
                         <div class="checkbox">
                             <label><input type="checkbox" ng-click="RemoveNotification($index)"></label>
