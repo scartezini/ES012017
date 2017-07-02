@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" ng-app="access">
   <head>
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
@@ -18,7 +18,7 @@
       <script src="https://oss.maxcdn.com/respond/1.4.2/respond.min.js"></script>
     <![endif]-->
   </head>
-  <body class="access">
+  <body ng-controller="Access" class="access">
 
     
     <div class="col-lg-4 col-lg-offset-4">
@@ -27,14 +27,14 @@
             <h1>Seja bem-vind@!</h1>
             <form>
 
-                <div class="form-group has-error has-feedback">
+                <div class="form-group {{ error == 1 ? 'has-error' : '' }}  has-feedback">
                     <label for="token">Insira o código de mesa abaixo</label>
-                    <input class="form-control" id="token" placeholder="Código de mesa">
-                    <span class="glyphicon glyphicon-remove form-control-feedback" aria-hidden="true"></span>
-                    <span id="inputError2Status" class="sr-only">(error)</span>
-                    <span id="helpBlock2" class="help-block">Código incorreto. Verifique a informação com o estabelecimento.</span>
+                    <input ng-model="token" class="form-control" id="token" placeholder="Código de mesa">
+                    <span ng-if="error == 1"  class="glyphicon glyphicon-remove form-control-feedback" aria-hidden="true"></span>
+                    <span ng-if="error == 1"  id="inputError2Status" class="sr-only">(error)</span>
+                    <span ng-if="error == 1" id="helpBlock2" class="help-block">Código incorreto. Verifique a informação com o estabelecimento.</span>
                 </div>
-                <button type="submit" class="btn btn-default">OK</button>
+                <button ng-click="Login()" class="btn btn-default">OK</button>
 
             </form>
         </div>
@@ -45,5 +45,25 @@
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
     <!-- Include all compiled plugins (below), or include individual files as needed -->
     <script src="/js/bootstrap.min.js"></script>
+    <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.6.4/angular.min.js"></script>
+   <script>
+    var app = angular.module("access", []);
+    app.controller("Access", function($window, $scope, $interval, $http) {
+        $scope.error = 0;
+        $scope.Login = function () {
+            $scope.error = 0;
+            $http.post("/api/access", {token: $scope.token}, {headers: {'Content-Type': 'application/json'}})
+                .then(function (response) {
+                    console.log(response.data);
+                    $window.location.href = '/menu';
+                },
+                function (data) {
+                    $scope.error = 1;
+                    console.log(data)
+                })
+        }
+    });
+    </script>
+  
   </body>
 </html>
