@@ -182,7 +182,7 @@
     var app = angular.module("menu", []);
     app.controller("Menu", function($scope, $http) {
         $scope.CallWaiter = function () {
-            $http.post("/api/notification", {}, {headers: {'Content-Type': 'application/json'}})
+            $http.post("/api/notification", {'type': 'call', 'message': 'Chamou o garçom'}, {headers: {'Content-Type': 'application/json'}})
                 .then(function (response) {
                     console.log(response.data)
                 },
