@@ -3,17 +3,29 @@
 Esse projeto é requisito da matéria de *[Engenharia de Software][ES]* (CIC 116441) da Universidade de Brasília (UnB).
 
 ## Como instalar
- 
+
+Instalação padrão:
+
     $ npm install
-  
+
+Instalação com a biblioteca de cobertura:
+
+    $ sudo npm install -g istanbul
+
 ## Como iniciar
 
     $ npm start
     
 ## Como testar
 
+Para testes unitários:
+
     $ npm test
-    
+
+Para testes de cobertura:
+
+    $ istanbul cover node_modules/.bin/ mocha
+
 ## Metodologia de desenvolvimento
 
 Esse projeto está sendo desenvolvido usando a metodologia Extreme Programming (*[XP][XP]*). As histórias de usuário criadas usando a metodologia podem ser encontradas *[aqui][USERSTORY]*. As votações a respeito da complexidade dessas histórias estão sendo feitas através da plataforma do Plan IT Poker (e podem ser acessadas *[aqui][PLANITPOKER]*). Por fim, as tarefas criadas a partir dessas histórias possuem referência a qual história elas possuem nas *[Issues][ISSUES]* criadas para elas.
