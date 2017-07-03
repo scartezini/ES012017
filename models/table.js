@@ -3,8 +3,9 @@ const Schema = Mongoose.Schema
 
 
 const Table = new Schema({
-	name: {type: String, required:true, unique:true},
+	name: {type: String, required:true},
 	token: {type: String, required:true, unique:true},
+    notifications: [{type: Schema.Types.ObjectId, ref: 'Notification'}],
 	status: String
 })
 
@@ -18,16 +19,7 @@ Table.index({
 Table.set('toJSON', {
 	getters: true,
 	virtuals: true,
-    transform: function(doc, ret, options) {
-        ret.id = ret._id;
-        delete ret._id;
-        delete ret.__v;
-        return ret;
-    }
 })
-
-
-
 
 module.exports = Mongoose.model('Table',Table)
 
