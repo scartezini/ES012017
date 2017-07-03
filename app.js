@@ -16,8 +16,8 @@ var LocalStrategy = require('passport-local').Strategy;
 var index = require('./routes/index');
 var access = require('./routes/access');
 var menu = require('./routes/menu');
-var notification = require('./routes/notification');
 var table = require('./routes/table');
+var notification = require('./routes/notification');
 var restaurant = require('./routes/restaurant');
 
 var app = express();
@@ -46,9 +46,9 @@ app.use(express.static(path.join(__dirname, 'public')));
 
 app.use('/', index);
 app.use('/api/access', access);
-app.use('/api/notification',notification);
 app.use('/api/table',table);
 app.use('/api/menu',menu);
+app.use('/api/notification',notification);
 app.use('/api/restaurant', restaurant);
 
 
