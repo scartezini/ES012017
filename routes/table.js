@@ -32,7 +32,11 @@ router.get('/:id',(req,res,next) => {
 //POST
 router.post('/',(req,res,next) => {
 	var table = new Table(req.body)
-  table.token = randomstring.generate(4)
+  table.token = randomstring.generate({
+		length: 4,
+		charset: 'alphanumeric',
+		capitalization: 'uppercase'
+	});
 	table.save((err,table) => {
 		if(err){
 			res.status(400)
