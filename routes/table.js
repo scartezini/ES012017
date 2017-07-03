@@ -4,16 +4,17 @@ var router = express.Router()
 var functions = require('./functions')
 let mongoose = require('mongoose')
 let Table = require('../models/table')
-
+let Restaurant = require('../models/restaurant')
 //GET
 router.get('/', functions.requireRestaurant, functions.requireLoggedRestaurant, (req,res,next) => {
-	Table.find({},(err,tables) =>{
-		if(err){
-			res.status(400)
-			res.json(err)
-		}else
-			res.json(tables)
-	})
+    Restaurant.findOne({_id: req.restaurant._id}).populate('tables').exec(function(err, result) {
+        if(err) {
+            res.status(400)
+            res.json(err)
+        } else {
+            res.json(result.tables)
+        }
+    })
 })
 
 router.get('/:id',(req,res,next) => {
@@ -25,9 +26,6 @@ router.get('/:id',(req,res,next) => {
 			res.json(result)
 	})
 })
-
-
-
 
 //POST
 router.post('/', functions.requireRestaurant, functions.requireLoggedRestaurant, (req,res,next) => {
