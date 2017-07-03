@@ -4,7 +4,7 @@ let Table = require('../models/table')
 var session = require('client-sessions')
 
 router.get('/', (req,res,next) => {
-		res.redirect('/table')
+		res.redirect('/restaurant')
 })
 
 router.get('/logout', (req, res, next) => {
