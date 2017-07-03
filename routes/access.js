@@ -7,8 +7,7 @@ let Table = require('../models/table')
 
 // POST
 router.post('/', (req,res,next) => {
-	console.log(req.body.token)
-	Table.findOne({token: req.body.token.toUpperCase()},(err,result) =>{
+	Table.findOne({token: req.body.token},(err,result) =>{
 		if(!result){
 			res.status(401)
 			res.json({error: "Invalid table token"})
