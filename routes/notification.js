@@ -7,7 +7,7 @@ let Table = require('../models/table')
 
 //GET
 router.get('/', (req,res,next) => {
-	Notification.find({}).populate('table').exec(function(err,notifications) {
+	Notification.find({},(err,notifications) =>{
 		if(err){
 			res.status(400)
 			res.json(err)
