@@ -56,13 +56,13 @@
                     <th></th>
                 </tr>
             </thead>
-            <tbody>
-                <tr ng-repeat="notification in notifications">
-                    <th scope="row">{{ notification.table.name }}</th>
+            <tbody ng-repeat="table in notifications">
+                <tr ng-repeat="notification in table.notifications">
+                    <th scope="row">{{ table.name }}</th>
                     <td>{{ notification.message }}</td>
                     <td>
                         <div class="checkbox">
-                            <label><input type="checkbox" ng-click="RemoveNotification($index)"></label>
+                            <label><input type="checkbox" ng-click="RemoveNotification(notification.id)"></label>
                         </div>
                     </td>
                 </tr>
@@ -88,9 +88,9 @@
         }
 
         $scope.RemoveNotification = function (index) {
-            $http.delete('/api/notification/' + $scope.notifications[index].id)
+            $http.delete('/api/notification/' + index)
                 .then(function (response) {
-                    $scope.notifications.splice(index, 1);
+                    $scope.GetAllNotifications();
                     console.log(response.data)
                 })
         }

@@ -3,7 +3,6 @@ const Schema = Mongoose.Schema
 
 
 const Notification= new Schema({
-	table: {type: Schema.Types.ObjectId, ref: 'Table'},
 	type: String,
 	message: String,
 	status: String
@@ -27,5 +26,4 @@ Notification.set('toJSON', {
     }
 })
 
-
-module.exports = Mongoose.model('Notification',Notification)
+module.exports = Mongoose.model('Notification', Notification)
