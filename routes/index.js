@@ -2,7 +2,6 @@ var express = require('express');
 var router = express.Router();
 let Table = require('../models/table')
 var session = require('client-sessions')
-var functions = require('./functions')
 
 router.get('/', (req,res,next) => {
 		res.redirect('/table')
@@ -13,7 +12,7 @@ router.get('/logout', (req, res, next) => {
     res.redirect('/access');
 })
 
-router.get('/table', functions.requireRestaurant, function(req, res, next) {
+router.get('/table', (req, res, next) => {
     res.render('temp/tables')
 })
 
@@ -34,7 +33,7 @@ router.get('/menu', (req, res, next) => {
         Table.findOne({_id: req.session.table }, (err, result) => {
             if(!result) {
                 req.session.destroy();
-                res.redirect('/access');
+                req.redirect('/access');
             }
             else {
                 res.locals.table = result;
