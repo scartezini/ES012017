@@ -170,7 +170,7 @@
         </div>
     </div>
 
-    <button id="call-waiter" class="btn btn-primary" ng-click="CallWaiter()">Chamar garçom</button>
+    <button id="call-waiter" class={{color}} ng-click="CallWaiter()">{{button}}</button>
 
 
     <!-- jQuery (necessary for Bootstrap's JavaScript plugins) -->
@@ -181,16 +181,34 @@
     <script>
     var app = angular.module("menu", []);
     app.controller("Menu", function($scope, $http) {
+        $scope.button = "Chamar garçom";
+        $scope.color = "btn btn-primary" 
+        $scope.called = false;
         $scope.CallWaiter = function () {
-            $http.post("/api/notification", {'type': 'call', 'message': 'Chamou o garçom'}, {headers: {'Content-Type': 'application/json'}})
-                .then(function (response) {
+            if ($scope.called == false) {
+               $http.post("/api/notification", {'type': 'call', 'message': 'Chamou o garçom'}, {headers: {'Content-Type': 'application/json'}}).then(function (response) {
                     console.log(response.data)
+                    $scope.notification = response.data
                 },
                 function(data) {
                     $scope.error = true;
                     $scope.errorMessage = data.data.errmsg;
                     console.log(data)
+                });
+                $scope.button = "Cancelar garçom";
+                $scope.color = "btn btn-danger" 
+                $scope.called = true;
+           } else {
+                $http.delete('/api/notification/' + $scope.notification.id)
+                .then(function (response) {
+                    $scope.GetAllNotifications();
+                    console.log(response.data)
                 })
+                $scope.button = "Chamar garçom";
+                $scope.color = "btn btn-primary" 
+                $scope.called = false;
+
+           }
         }
     });
     </script>
