@@ -13,7 +13,7 @@ router.get('/logout', (req, res, next) => {
     res.redirect('/access');
 })
 
-router.get('/table', functions.requireRestaurant, functions.redirectLoginRestaurant, function(req, res, next) {
+router.get('/table', functions.requireRestaurant, function(req, res, next) {
     res.render('temp/tables')
 })
 
