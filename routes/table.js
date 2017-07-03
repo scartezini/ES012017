@@ -18,7 +18,8 @@ router.get('/', functions.requireRestaurant, functions.requireLoggedRestaurant, 
     })
 })
 
-router.get('/:id',(req,res,next) => {
+// DOES NOT CHECK IF TABLE IS RESTAURANTS
+router.get('/:id', functions.requireRestaurant, functions.requireLoggedRestaurant, (req,res,next) => {
 	Table.findOne({_id: req.params.id}, (err,result) => {
 		if(err){
 			res.status(400)
