@@ -6,7 +6,7 @@ let mongoose = require('mongoose')
 let Table = require('../models/table')
 
 //GET
-router.get('/', functions.requireRestaurant, functions.requireLoggedRestaurant, function(req,res,next) {
+router.get('/', functions.requireRestaurant, functions.requireLoggedRestaurant, (req,res,next) => {
 	Table.find({},(err,tables) =>{
 		if(err){
 			res.status(400)
@@ -30,16 +30,26 @@ router.get('/:id',(req,res,next) => {
 
 
 //POST
-router.post('/',(req,res,next) => {
-	var table = new Table(req.body)
-  table.token = randomstring.generate(4)
-	table.save((err,table) => {
+router.post('/', functions.requireRestaurant, functions.requireLoggedRestaurant, (req,res,next) => {
+    var table = new Table({name: req.body.name})
+    table.token = randomstring.generate(4)
+    
+    table.save((err,table) => {
 		if(err){
 			res.status(400)
 			res.json(err)
 		}
 		else{
-			res.json(table)
+            req.restaurant.tables.push(table)
+            req.restaurant.save((err, restaurant) => {
+                if(err) {
+                    res.status(400)
+                    res.json(err)
+                }
+                else {
+			        res.json(table)
+                }
+            })
 		}
 	})
 })
