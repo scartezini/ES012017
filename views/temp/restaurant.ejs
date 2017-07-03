@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html lang="en" ng-app="login">
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <!-- The above 3 meta tags *must* come first in the head; any other head content must come *after* these tags -->
+    <title>Mesas</title>
+
+    <!-- Bootstrap -->
+    <link href="/css/bootstrap.min.css" rel="stylesheet">
+    <link href="/stylesheets/style.css" rel="stylesheet">
+
+    <!-- HTML5 shim and Respond.js for IE8 support of HTML5 elements and media queries -->
+    <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
+    <!--[if lt IE 9]>
+      <script src="https://oss.maxcdn.com/html5shiv/3.7.3/html5shiv.min.js"></script>
+      <script src="https://oss.maxcdn.com/respond/1.4.2/respond.min.js"></script>
+    <![endif]-->
+  </head>
+  <body ng-controller="Login" class="login">
+
+    
+    <div class="col-lg-4 col-lg-offset-4">
+        <div id="welcome">
+            <img class="logo" src="/img/mesa.png" >
+            <h1>Seja bem-vind@!</h1>
+            <form>
+
+                <div class="form-group {{ error == 1 ? 'has-error' : '' }}  has-feedback">
+                    <label for="token">Insira e-mail e senha abaixo</label>
+                    <input ng-model="email" type="email" class="form-control" id="email" placeholder="suaempresa@exemplo.com"><br>
+                    <input ng-model="password" type="password" class="form-control" id="password" placeholder="******">
+                    <span ng-if="error == 1"  class="glyphicon glyphicon-remove form-control-feedback" aria-hidden="true"></span>
+                    <span ng-if="error == 1"  id="inputError2Status" class="sr-only">(error)</span>
+                    <span ng-if="error == 1" id="helpBlock2" class="help-block">E-mail e/ou senha incorretos.</span>
+                </div>
+                <button ng-click="Login()" class="btn btn-default">OK</button>
+
+            </form>
+        </div>
+    </div>
+
+
+    <!-- jQuery (necessary for Bootstrap's JavaScript plugins) -->
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
+    <!-- Include all compiled plugins (below), or include individual files as needed -->
+    <script src="/js/bootstrap.min.js"></script>
+    <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.6.4/angular.min.js"></script>
+   <script>
+    var app = angular.module("login", []);
+    app.controller("Login", function($window, $scope, $interval, $http) {
+        $scope.error = 0;
+        $scope.Login = function () {
+            $scope.error = 0;
+            $http.post("/api/restaurant/login", {email: $scope.email, password: $scope.password}, {headers: {'Content-Type': 'application/json'}})
+                .then(function (response) {
+                    console.log(response.data);
+                    $window.location.href = '/';
+                },
+                function (data) {
+                    $scope.error = 1;
+                    console.log(data)
+                })
+        }
+    });
+    </script>
+  
+  </body>
+</html>

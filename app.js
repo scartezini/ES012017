@@ -42,8 +42,6 @@ app.use(require('express-session')({
     resave: false,
     saveUninitialized: false
 }));
-app.use(passport.initialize());
-app.use(passport.session());
 app.use(express.static(path.join(__dirname, 'public')));
 
 app.use('/', index);
@@ -51,17 +49,12 @@ app.use('/api/access', access);
 app.use('/api/table',table);
 app.use('/api/menu',menu);
 app.use('/api/notification',notification);
-app.use('/restaurant', restaurant);
+app.use('/api/restaurant', restaurant);
 
-// passport config
-var Restaurant = require('./models/restaurant');
-passport.use(new LocalStrategy(Restaurant.authenticate()));
-passport.serializeUser(Restaurant.serializeUser());
-passport.deserializeUser(Restaurant.deserializeUser());
 
 // session handler middleware
 app.use(session({
-    cookieName: 'tableToken',
+    cookieName: 'sessionMinhaMesa',
     secret: 'vPYlfydlMP',
     duration: 300*60*1000,
     activeDuration: 20*60*1000,
