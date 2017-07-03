@@ -29,6 +29,10 @@ router.get('/restaurant', (req, res, next) => {
     res.render('temp/restaurant')
 })
 
+router.get('/signup', (req, res, next) => {
+    res.render('temp/signup')
+})
+
 router.get('/menu', (req, res, next) => {
     if(req.session && req.session.table) {
         Table.findOne({_id: req.session.table }, (err, result) => {
