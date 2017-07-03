@@ -17,14 +17,19 @@ module.exports = {
                 }
                 else {
                     req.session.destroy();
-                    res.redirect('/restaurant')
                 }
                 next();
             })
         }
         else {
-            res.redirect('/restaurant')
             next();
+        }
+    },
+    redirectLoginRestaurant: function (req, res, next) {
+        if (!req.restaurant) {
+            res.redirect('/restaurant')
+        } else {
+            next(); 
         }
     }
 }
