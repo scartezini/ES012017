@@ -12,7 +12,6 @@ router.get('/', functions.requireRestaurant, functions.requireLoggedRestaurant, 
             res.status(400)
             res.json(err)
         } else {
-            res.status(200)
             res.json(result.tables)
         }
     })
@@ -55,20 +54,16 @@ router.post('/', functions.requireRestaurant, functions.requireLoggedRestaurant,
 
 	
 //DELETE
-router.delete('/:id', functions.requireRestaurant, functions.requireLoggedRestaurant, (req,res,next) => {
-    Restaurant.findOneAndUpdate({_id: req.restaurant._id},
-    {
-        $pull: {tables: req.params.id}
-    },  function(err, result) {
-        if (err) {
-            res.status(400)
-            res.json(err)
-        }
-        else {
-            res.status(200)
-            res.json({result: "Done"})
-        }
-    })
+router.delete('/:id',(req,res,next) => {
+	Table.remove({_id : req.params.id},(err) =>{
+		if(err){
+			res.status(400)
+			res.json(err)
+		}
+		else
+			res.json({remove:"ok"});
+
+	})
 })
 
 
