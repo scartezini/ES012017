@@ -1,17 +1,10 @@
 var express = require('express');
 var router = express.Router();
-let Table = require('../models/table')
-var session = require('client-sessions')
+
 
 router.get('/', (req,res,next) => {
 		res.redirect('/table')
 })
-
-router.get('/logout', (req, res, next) => {
-    req.session.destroy();
-    res.redirect('/access');
-})
-
 router.get('/table', (req, res, next) => {
     res.render('temp/tables')
 })
@@ -25,21 +18,7 @@ router.get('/access', (req, res, next) => {
 })
 
 router.get('/menu', (req, res, next) => {
-    if(req.session && req.session.table) {
-        Table.findOne({_id: req.session.table }, (err, result) => {
-            if(!result) {
-                req.session.destroy();
-                req.redirect('/access');
-            }
-            else {
-                res.locals.table = result;
-                res.render('temp/menu', {table: result});
-            }
-        })
-    }
-    else {
-        res.redirect('/access')
-    }
+    res.render('temp/menu');
 })
 
 module.exports = router;
