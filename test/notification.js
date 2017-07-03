@@ -7,15 +7,66 @@ let app = require('../app')
 let should = chai.should()
 
 let Notification = require('../models/notification')
+let Restaurant =  require('../models/restaurant')
 let Table = require('../models/table')
 chai.use(chaiHttp)
 
 
 describe('Notification', () => {
+
+	var cookies
+
 	beforeEach((done) => {
-		Notification.remove({}, (err) => {
-			done()
+		Notification.remove({}, (err) => {})
+		
+		let rest = new Restaurant({email:'test@test.com',password:'1234'})
+		rest.save((err,book) => {})
+		chai.request(app)
+			.post('/api/restaurant/login')
+			.send(rest)
+			.end((err, res) => {
+				cookies = res.headers['set-cookie'].pop().split(';')[0]
+				done()
+			})
+	})
+
+	describe('/GET Notification', () => {
+		it('it should GET all the notifications', (done) => {
+			chai.request(app)
+				.get('/api/notification')
+				.set('Cookie',cookies)
+				.end((err, res) => {
+					res.should.have.status(200)
+					res.body.should.be.a('array')
+					res.body.length.should.be.eql(0)
+				done()
+			})
 		})
+	})
+
+	describe('/DELETE/:id notification',() => {
+		it('it should DELETE a notification by the given id',(done) => {
+			var notification = new Notification({})
+			notification.save((err,book)=>{
+				chai.request(app)
+					.delete('/api/notification/' + notification.id)
+					.set('Cookie',cookies)
+					.end((err,res) => {
+						res.should.have.status(200)
+					
+						done()
+					})
+			})
+		})
+	})
+})
+
+
+
+describe('Notificationi 401', () => {
+
+	beforeEach((done) => {
+		Notification.remove({}, (err) => {done()})
 	})
 
 	describe('/GET Notification', () => {
@@ -23,10 +74,23 @@ describe('Notification', () => {
 			chai.request(app)
 				.get('/api/notification')
 				.end((err, res) => {
-					res.should.have.status(200)
-					res.body.should.be.a('array')
-					res.body.length.should.be.eql(0)
+					res.should.have.status(401)
 				done()
+			})
+		})
+	})
+
+	describe('/DELETE/:id notification',() => {
+		it('it should DELETE a notification by the given id',(done) => {
+			var notification = new Notification({})
+			notification.save((err,book)=>{
+				chai.request(app)
+					.delete('/api/notification/' + notification.id)
+					.end((err,res) => {
+						res.should.have.status(401)
+					
+						done()
+					})
 			})
 		})
 	})
@@ -57,24 +121,3 @@ describe('/POST Notification', () => {
 	})
 })
 
-describe('/DELETE/:id notification',() => {
-
-	beforeEach((done) => {
-		Notification.remove({}, (err) => {
-			done()
-		})
-	})
-	
-	it('it should DELETE a notification by the given id',(done) => {
-		var notification = new Notification({})
-		notification.save((err,book)=>{
-			chai.request(app)
-				.delete('/api/notification/' + notification.id)
-				.end((err,res) => {
-					res.should.have.status(200)
-				
-					done()
-				})
-		})
-	})
-})
