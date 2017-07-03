@@ -56,7 +56,7 @@
             $http.post("/api/restaurant/login", {email: $scope.email, password: $scope.password}, {headers: {'Content-Type': 'application/json'}})
                 .then(function (response) {
                     console.log(response.data);
-                    $window.location.href = '/notification';
+                    $window.location.href = '/';
                 },
                 function (data) {
                     $scope.error = 1;

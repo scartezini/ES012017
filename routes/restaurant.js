@@ -7,7 +7,6 @@ var router = express.Router();
 router.post('/register', (req, res, next) => {
     new Restaurant({email: req.body.email, password: req.body.password}).save((err, result) => {
         if (err) {
-						console.log(err)
             res.status(302)
             res.json(err)
         } else {

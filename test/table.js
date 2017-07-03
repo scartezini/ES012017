@@ -73,8 +73,8 @@ describe('/POST table',() => {
 				res.body.should.have.property('id')
 				res.body.should.have.property('name')
 				res.body.should.have.property('token')
-				
-				done()
+
+			done()
 		})
 	})
 
@@ -83,14 +83,21 @@ describe('/POST table',() => {
 
 describe('/GET/:id table',() => {
 
+	beforeEach((done) => {
+		Table.remove({}, (err) => {
+			done()
+		})
+	})
 	
 	it('it should GET a table by the given id',(done) => {
-		var table = new Table({name:"lunch Table"})
+		var table = new Table({name:"Dining Table"})
 		table.save((err,book)=>{
 			chai.request(app)
 				.get('/api/table/' + table.id)
+				.send(table)
 				.end((err,res) => {
 					res.should.have.status(200)
+					res.body.should.have.property('_id').eql(table.id)
 				
 					done()
 				})
