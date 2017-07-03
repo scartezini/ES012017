@@ -32,9 +32,12 @@ router.get('/:id', functions.requireRestaurant, functions.requireLoggedRestauran
 //POST
 router.post('/', functions.requireRestaurant, functions.requireLoggedRestaurant, (req,res,next) => {
     var table = new Table({name: req.body.name})
-    table.token = randomstring.generate(4)
-    
-    table.save((err,table) => {
+    table.token = randomstring.generate({
+		length: 4,
+		charset: 'alphanumeric',
+		capitalization: 'uppercase'
+	});
+	table.save((err,table) => {
 		if(err){
 			res.status(400)
 			res.json(err)
