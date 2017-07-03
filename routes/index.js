@@ -17,7 +17,7 @@ router.get('/table', functions.requireRestaurant, functions.redirectLoginRestaur
     res.render('temp/tables')
 })
 
-router.get('/notification', functions.requireRestaurant, functions.redirectLoginRestaurant, (req, res, next) => {
+router.get('/notification', (req, res, next) => {
     res.render('temp/notifications')
 })
 
