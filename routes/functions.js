@@ -25,14 +25,6 @@ module.exports = {
             next();
         }
     },
-    requireLoggedRestaurant: function (req, res, next) {
-        if(!req.restaurant) {
-            res.status(401)
-            res.json({error: "Invalid credentials for restaurant"})
-        } else {
-            next();    
-        }  
-    },
     redirectLoginRestaurant: function (req, res, next) {
         if (!req.restaurant) {
             res.redirect('/restaurant')

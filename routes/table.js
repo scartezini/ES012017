@@ -1,12 +1,12 @@
 var randomstring = require("randomstring")
 var express = require('express')
 var router = express.Router()
-var functions = require('./functions')
+
 let mongoose = require('mongoose')
 let Table = require('../models/table')
 
 //GET
-router.get('/', functions.requireRestaurant, functions.requireLoggedRestaurant, function(req,res,next) {
+router.get('/', (req,res,next) => {
 	Table.find({},(err,tables) =>{
 		if(err){
 			res.status(400)
