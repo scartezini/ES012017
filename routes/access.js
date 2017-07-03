@@ -12,9 +12,9 @@ router.post('/', (req,res,next) => {
 			res.status(401)
 			res.json({error: "Invalid table token"})
 		}else{
-            req.session.table = result._id;
+    	req.session.table = result._id;
 			res.json(result._id);
-        }
+		}
 	})
 })
 

@@ -5,7 +5,7 @@ var session = require('client-sessions')
 var functions = require('./functions')
 
 router.get('/', (req,res,next) => {
-		res.redirect('/table')
+		res.redirect('/restaurant')
 })
 
 router.get('/logout', (req, res, next) => {
