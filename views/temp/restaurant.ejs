@@ -36,6 +36,7 @@
                     <span ng-if="error == 1" id="helpBlock2" class="help-block">E-mail e/ou senha incorretos.</span>
                 </div>
                 <button ng-click="Login()" class="btn btn-default">OK</button>
+                <button ng-click="Cadastrar()" class="btn btn-default">Cadastrar</button>
 
             </form>
         </div>
@@ -62,6 +63,9 @@
                     $scope.error = 1;
                     console.log(data)
                 })
+        }
+        $scope.Cadastrar = function () {
+            $window.location.href = '/signup';
         }
     });
     </script>
